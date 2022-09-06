@@ -35,6 +35,11 @@ class Hangman:
 
     def run(self):
         while not self.win and self.lifes >= 1:
+            if utils.check_win(self.output_format):
+                print("Word discovered correctly")
+                self.win = True
+                continue
+
             print(self.output_format)
             enter = self.valid_input()
 

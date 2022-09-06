@@ -20,4 +20,6 @@ def generate_output_format(word: str) -> str:
 
 
 def check_win(output_format: str) -> bool:
-    raise NotImplementedError()
+    if "_" in output_format:
+        return False
+    return True
