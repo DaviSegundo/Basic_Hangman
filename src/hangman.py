@@ -35,6 +35,12 @@ class Hangman:
 
     def run(self):
         while not self.win and self.lifes >= 1:
+            if utils.check_win(self.output_format):
+                print("Word discovered correctly")
+                print(self.word)
+                self.win = True
+                continue
+
             print(self.output_format)
             enter = self.valid_input()
 
@@ -43,7 +49,8 @@ class Hangman:
                 self.output_format = utils.transform_output_format(
                     output_format=self.output_format, letter=enter, index_found=idxs
                 )
+                print()
             else:
                 print("Char not found in word")
                 self.lifes -= 1
-                print(f"{self.lifes} lifes remaing")
+                print(f"{self.lifes} lifes remaing\n")
