@@ -1,15 +1,21 @@
+"""
+File that handles the implementation of game logic.
+"""
+
 import random
-from os import system
 from dataclasses import dataclass, field
 
 from src import utils
-from src import display
-
-clear = lambda: system("clear")
+from src.display import Display
 
 
 @dataclass
 class Hangman:
+    """
+    Game class, where logic is implemented and defined.
+    """
+
+    display: Display
 
     lifes: int = field(init=False, default=6)
     word_list: list[str] = field(
@@ -25,33 +31,51 @@ class Hangman:
         self.output_format = utils.generate_output_format(self.word)
         self.win = False
 
+    def show_general_info_display(self) -> None:
+        """
+        Function to center the default display view avoiding repetition of this
+        entire block of code.
+        """
+        self.display.show_general_info(
+            lifes=self.lifes,
+            tried_letter_list=self.tried_letter_list,
+            output_format=self.output_format,
+        )
+
+        return None
+
     def valid_input(self) -> str:
+        """
+        Validates user input, confirming it was a single letter.
+        """
         valid = False
         char = ""
         while not valid:
             char = input("Chosse a letter: ")
 
             if 0 <= len(char) > 1 or not char.isalpha():
-                print("Invalid letter\n")
+                self.show_general_info_display()
+                print(f"Invalid letter attempted: {char}\n")
             elif char in self.tried_letter_list:
-                print("Letter already tried\n")
+                self.show_general_info_display()
+                print(f"Letter already attempted: {char}\n")
             else:
                 valid = True
 
         return char
 
-    def run(self):
+    def run(self) -> None:
+        """
+        Run the game and handles the execution flow.
+        """
         while not self.win and self.lifes >= 1:
-            clear()
             if utils.check_win(self.output_format):
-                print("Word discovered correctly!")
-                print(self.word)
+                self.display.show_win_info(word=self.word)
                 self.win = True
                 continue
 
-            display.get_general_info(
-                self.lifes, self.tried_letter_list, self.output_format
-            )
+            self.show_general_info_display()
+
             enter = self.valid_input()
             self.tried_letter_list.append(enter)
 
@@ -60,13 +84,10 @@ class Hangman:
                 self.output_format = utils.transform_output_format(
                     output_format=self.output_format, letter=enter, index_found=idxs
                 )
-                print()
             else:
-                print("Char not found in word")
                 self.lifes -= 1
-                print("\n")
 
             if self.lifes == 0:
-                clear()
-                print(display.get_display(self.lifes))
-                print("You loose!")
+                self.display.show_lose_info(self.word)
+
+        return None

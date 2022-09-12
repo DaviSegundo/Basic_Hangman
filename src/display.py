@@ -1,83 +1,44 @@
-def get_display(lifes: int) -> str:
-
-    lifes_6 = r"""
-   _________
-  |        |
-  |
-  |
-  |
-__|__
-    """
-
-    lifes_5 = r"""
-   _________
-  |        |
-  |        O
-  |
-  |
-__|__
-    """
-
-    lifes_4 = r"""
-   _________
-  |        |
-  |        O
-  |        |
-  |
-__|__
-    """
-
-    lifes_3 = r"""
-   _________
-  |        |
-  |        O
-  |        |\
-  |
-__|__
-    """
-
-    lifes_2 = r"""
-   _________
-  |        |
-  |        O
-  |       /|\
-  |
-__|__
-    """
-
-    lifes_1 = r"""
-   _________
-  |        |
-  |        O
-  |       /|\
-  |         \
-__|__
-    """
-
-    lifes_0 = r"""
-   _________
-  |        |
-  |        O
-  |       /|\
-  |       / \
-__|__
-    """
-
-    display = {
-        6: lifes_6,
-        5: lifes_5,
-        4: lifes_4,
-        3: lifes_3,
-        2: lifes_2,
-        1: lifes_1,
-        0: lifes_0,
-    }
-
-    return display.get(lifes, "")
+from os import system
+from dataclasses import dataclass
 
 
-def get_general_info(lifes: int, tried_letter_list: list, output_format: str):
-    print(get_display(lifes))
-    print(f"{lifes} lifes remaing\n")
-    print(f"Tried letter: {tried_letter_list}")
-    print(output_format)
+@dataclass
+class Display:
+
+    picture_dict: dict[int, str]
+
+    def clear(self) -> None:
+        system("clear")
+
+        return None
+
+    def get_picture(self, lifes: int) -> str:
+        return self.picture_dict.get(lifes, "")
+
+    def show_general_info(
+        self, lifes: int, tried_letter_list: list, output_format: str
+    ) -> None:
+        self.clear()
+        print("Hangman Game")
+        print(self.get_picture(lifes))
+        print(f"{lifes} lifes remaing\n")
+        print(f"Attempted letters: {tried_letter_list}\n")
+        print(output_format)
+        print()
+
+        return None
+
+    def show_win_info(self, word: str) -> None:
+        self.clear()
+        print("Word guessed correctly!")
+        print(f"The word was: {word}")
+
+        return None
+
+    def show_lose_info(self, word: str) -> None:
+        self.clear()
+        print(self.get_picture(0))
+        print("You lose!")
+        print(f"The word was: {word}")
+
+        return None
