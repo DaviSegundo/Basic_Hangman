@@ -42,8 +42,6 @@ class Hangman:
             output_format=self.output_format,
         )
 
-        return None
-
     def valid_input(self) -> str:
         """
         Validates user input, confirming it was a single letter.
@@ -89,5 +87,3 @@ class Hangman:
 
             if self.lifes == 0:
                 self.display.show_lose_info(self.word)
-
-        return None

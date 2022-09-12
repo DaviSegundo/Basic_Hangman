@@ -1,7 +1,15 @@
+"""
+Handles general testing of game features.
+"""
+
 from src import utils
 
 
 class TestGetIndexLetter:
+    """
+    Class to test the functionality of getting the letter index in the word.
+    """
+
     def test_get_index_letter_1(self):
         word = "davi"
         letter = "a"
@@ -36,6 +44,10 @@ class TestGetIndexLetter:
 
 
 class TestTransformOutput:
+    """
+    Class to test the functionality transform the word in the output.
+    """
+
     def test_transform_output_format_basic(self):
         out = "_ _ _ _"
         letter = "a"
@@ -82,6 +94,10 @@ class TestTransformOutput:
 
 
 class TestGenerateOutputFormat:
+    """
+    Class to test the functionality to generate the initial output format.
+    """
+
     def test_generate_output_format_1(self):
         word = "davi"
 
@@ -98,6 +114,10 @@ class TestGenerateOutputFormat:
 
 
 class TestCheckWin:
+    """
+    Class to test the functionality of the player having won.
+    """
+
     def test_check_win_true(self):
         output_format = "d a v i"
 
