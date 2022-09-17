@@ -1,0 +1,8 @@
+[run]
+omit =
+    *__init__.py,
+    tests/*,
+    src/display.py,
+    src/hangman.py,
+    src/pictures.py,
+    main.py,
